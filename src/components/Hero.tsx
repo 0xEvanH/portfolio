@@ -44,10 +44,10 @@ const StatBlock: FC<{ value: number; label: string }> = ({ value, label }) => {
 
 const Hero: FC<{ ready: boolean }> = ({ ready }) => {
   const [countingStarted, setCountingStarted] = useState(false);
-  const sectionRef   = useRef<HTMLElement>(null);
-  const [rawCursor, setRawCursor]   = useState({ x: 0.5, y: 0.5 });
+  const sectionRef = useRef<HTMLElement>(null);
+  const [rawCursor, setRawCursor] = useState({ x: 0.5, y: 0.5 });
   const smoothCursor = useRef({ x: 0.5, y: 0.5 });
-  const cursorRafId  = useRef<number>(0);
+  const cursorRafId = useRef<number>(0);
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
@@ -71,11 +71,11 @@ const Hero: FC<{ ready: boolean }> = ({ ready }) => {
 
   useEffect(() => { if (ready) setTimeout(() => setCountingStarted(true), 600); }, [ready]);
 
-  const nameText  = useScramble("Evan Howard", ready, 38);
-  const fieldText = useScramble("Undergrad.",  ready, 42);
+  const nameText = useScramble("Evan Howard", ready, 38);
+  const fieldText = useScramble("Undergrad.", ready, 42);
   const projectCount = useCountUp(projects.length, countingStarted, 900);
-  const skillCount   = useCountUp(skills.length,   countingStarted, 1100);
-  const yearCount    = useCountUp(2,               countingStarted, 800);
+  const skillCount = useCountUp(skills.length, countingStarted, 1100);
+  const yearCount = useCountUp(2, countingStarted, 800);
 
   const entranceStyle = (delay: number): CSSProperties => ({
     opacity: ready ? 1 : 0,
@@ -125,8 +125,8 @@ const Hero: FC<{ ready: boolean }> = ({ ready }) => {
 
       <div className="flex gap-14 mb-10" style={entranceStyle(0.55)}>
         <StatBlock value={projectCount} label="Projects" />
-        <StatBlock value={skillCount}   label="Skill Areas" />
-        <StatBlock value={yearCount}    label="Years Building" />
+        <StatBlock value={skillCount} label="Skill Areas" />
+        <StatBlock value={yearCount} label="Years Building" />
       </div>
 
       <p
@@ -134,9 +134,8 @@ const Hero: FC<{ ready: boolean }> = ({ ready }) => {
         style={{ fontWeight: 400, fontSize: "0.95rem", lineHeight: 1.75, color: WHITE_DIM, ...entranceStyle(0.65) }}
       >
         Building systems at the intersection of{" "}
-        <strong style={{ fontWeight: 900, color: "rgba(255,255,255,0.7)", fontStyle: "italic" }}>immersive technology</strong>
-        {" "}and human experience. Applying to{" "}
-        <strong style={{ fontWeight: 900, color: "rgba(255,255,255,0.7)" }}>BSc Immersive Software Engineering.</strong>
+        <strong style={{ fontWeight: 900, color: "rgba(255,255,255,0.7)"}}>3D, AI,</strong>
+        {" "} or from <strong style={{ fontWeight: 900, color: "rgba(255,255,255,0.7)"}}>browser</strong> to <strong style={{ fontWeight: 900, color: "rgba(255,255,255,0.7)"}}>game engine</strong>.
       </p>
     </section>
   );

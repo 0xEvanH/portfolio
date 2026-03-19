@@ -62,26 +62,21 @@ const About: FC = () => {
 
   const bioParagraphs = [
     [
-      { text: "I'm a developer focused on systems that blur the boundary between " },
-      { text: "software and physical reality", bold: true },
-      { text: " - " },
-      { text: "AR, real-time computation,", bold: true, italic: true },
-      { text: " and the infrastructure that makes both possible." },
+      { text: "Started coding from a young age, driven by the " },
+      { text: "endless possibilities", bold: true },
+      { text: " of what technology could do, and an obsession with understanding how it actually worked." },
     ],
     [
-      { text: "I write code the way I think about problems: " },
-      { text: "methodically,", italic: true },
-      { text: " with attention to " },
-      { text: "what fails first.", bold: true },
-      { text: " Every project here is a complete cycle from problem definition to " },
-      { text: "working implementation.", bold: true },
+      { text: "Today I build across the full stack, web apps, 3D tools, " },
+      { text: "AI systems, ", italic: true },
+      { text: " and games. Always pushing toward problems I " },
+      { text: "haven't solved before.", bold: true },
     ],
     [
-      { text: "I'm applying to study " },
-      { text: "Immersive Software Engineering", bold: true, italic: true },
-      { text: " because I want to build the " },
-      { text: "foundational tools", bold: true },
-      { text: " the next generation of human-computer interaction will depend on." },
+      { text: "Every project is a complete cycle: problem definition to working implementation, " },
+      { text: "built to function flawlessly ", italic: true },
+      { text: " and hold up " },
+      { text: "under the hood.", bold: true },
     ],
   ];
 
