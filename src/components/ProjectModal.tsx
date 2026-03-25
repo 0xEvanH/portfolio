@@ -190,7 +190,6 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
           {/* body */}
           <div className="pm-body">
 
-            {/* ── LEFT: description ── */}
             <div className="pm-desc">
               <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
                 <span style={{ fontWeight: 700, fontSize: "0.56rem", letterSpacing: "0.14em", textTransform: "uppercase", color: accent, opacity: 0.9 }}>{project.year}</span>
@@ -217,7 +216,6 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
               </div>
             </div>
 
-            {/* ── RIGHT: actions ── */}
             <div className="pm-actions">
 
               <div style={{ fontWeight: 700, fontSize: "0.56rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: "0.25rem" }}>
@@ -237,7 +235,6 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
                 </div>
               )}
 
-              {/* esports-web: expandable site list */}
               {isEsportsWeb ? (
                 <div>
                   <button
@@ -261,13 +258,6 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
                             onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = `${accent}35`; }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = `${accent}20`; }}
                           >↗ Live</a>
-                          {site.github && (
-                            <a href={site.github} target="_blank" rel="noopener noreferrer"
-                              style={{ ...btnBase, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.6)", padding: "0.3rem 0.7rem", fontSize: "0.62rem" }}
-                              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
-                              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.6)"; }}
-                            >⌥ Repo</a>
-                          )}
                         </div>
                       </div>
                     ))}
