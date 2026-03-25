@@ -31,11 +31,11 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
   if (!project) return null;
 
   const isStudySite   = project.id === "01" || project.tags?.includes("study");
-  const isEsports     = project.id === "02" || project.tags?.includes("esports") || project.id === "05";
+  const isEsports     = project.id === "05" || project.tags?.includes("esports");
   const showTestLogin = isStudySite || isEsports;
   const testCreds     = isStudySite
-    ? { label: "Study Site",        user: "demo@studysite.io", pass: "Demo1234!"  }
-    : { label: "Esports Dashboard", user: "player@gg.io",      pass: "Esports99#" };
+    ? { label: "Study Site",        user: "test@evhsync.com", pass: "Test1234"  }
+    : { label: "Esports Dashboard", user: "test@evhsync.com",      pass: "Test1234" };
 
   return (
     <>
