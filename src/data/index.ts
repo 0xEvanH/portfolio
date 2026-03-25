@@ -75,7 +75,7 @@ export const projects: Project[] = [
     img: IMGS["05"],
     accent: "#e8b0b0",
     size: "square",
-    tags: ["esports"],
+    tags: ["esports-dash"],
   },
 ];
 
