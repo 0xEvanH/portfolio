@@ -1,4 +1,4 @@
-export type SectionId = "home" | "work" | "skills" | "about" | "contact";
+export type SectionId = "home" | "work" | "skills" | "about" | "experience" | "contact";
 
 export interface Project {
   id: string;
@@ -33,3 +33,21 @@ export interface RichSegment {
   bold?: boolean;
   italic?: boolean;
 }
+
+export interface Project {
+  id: string;
+  title: string;
+  desc: string;
+
+  caseStudy?: string;
+  year: string;
+  img: string;
+  accent: string;
+  link: string;
+
+  github?: string;
+  stack: string[];
+
+  tags?: string[];
+}
+ 

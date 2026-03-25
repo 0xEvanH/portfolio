@@ -32,3 +32,79 @@ body {
   75%  { transform: translate(2%, 2%); }
   100% { transform: translate(0, 0); }
 }
+
+/* ── Mobile responsive helpers ─────────────────────────────────── */
+
+/* Section padding: generous on desktop, tight on mobile */
+.section-pad {
+  padding-left: clamp(1.25rem, 5vw, 5rem);
+  padding-right: clamp(1.25rem, 5vw, 5rem);
+}
+
+/* Hide side nav + section counter on small screens */
+@media (max-width: 768px) {
+  .sidenav-hide-mobile { display: none !important; }
+  .section-counter-hide-mobile { display: none !important; }
+  .progress-bar-hide-mobile { display: none !important; }
+}
+
+/* Work grid: 3 cols desktop → 1 col mobile */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 260px;
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 220px;
+  }
+}
+@media (max-width: 600px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
+  }
+  /* wide cards go full width on mobile */
+  .work-grid > * {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+}
+
+/* About two-col grid → single col on mobile */
+.about-grid {
+  display: grid;
+  gap: 5rem;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Skills label/value row → stack on mobile */
+.skill-row-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 12rem 1fr;
+}
+@media (max-width: 600px) {
+  .skill-row-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* Modal padding on mobile */
+@media (max-width: 600px) {
+  .pm-overlay { padding: 0 !important; }
+  .pm-card {
+    border-radius: 16px 16px 0 0 !important;
+    min-height: calc(100dvh - 3rem);
+    margin-top: 3rem !important;
+  }
+}

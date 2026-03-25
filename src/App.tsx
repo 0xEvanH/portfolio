@@ -7,6 +7,7 @@ import Hero    from "./components/Hero";
 import Work    from "./components/Work";
 import Skills  from "./components/Skills";
 import About   from "./components/About";
+import Experience from "./components/Experience";
 import Contact from "./components/Contact";
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
       <Work />
       <Skills />
       <About />
+      <Experience />
       <Contact />
     </div>
   );

@@ -15,33 +15,12 @@ const FactRow: FC<{ fact: Fact; entranceDelay: number; sectionVisible: boolean }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="py-[1.3rem] cursor-default"
-        style={{
-          opacity: sectionVisible ? 1 : 0,
-          transform: sectionVisible ? "none" : "translateY(18px)",
-          transition: `opacity 0.65s ease ${entranceDelay}s, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${entranceDelay}s`,
-        }}
+        style={{ opacity: sectionVisible ? 1 : 0, transform: sectionVisible ? "none" : "translateY(18px)", transition: `opacity 0.65s ease ${entranceDelay}s, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${entranceDelay}s` }}
       >
-        <div
-          className="uppercase mb-[0.4rem]"
-          style={{
-            fontWeight: 700,
-            fontSize: "0.6rem",
-            letterSpacing: isHovered ? "0.16em" : "0.1em",
-            color: WHITE_DIM,
-            transition: "letter-spacing 0.4s ease",
-          }}
-        >
+        <div className="uppercase mb-[0.4rem]" style={{ fontWeight: 700, fontSize: "0.6rem", letterSpacing: isHovered ? "0.16em" : "0.1em", color: WHITE_DIM, transition: "letter-spacing 0.4s ease" }}>
           {fact.label}
         </div>
-        <div
-          style={{
-            fontWeight: 700,
-            fontSize: "0.92rem",
-            color: isHovered ? WHITE : "rgba(255,255,255,0.85)",
-            transform: isHovered ? "translateX(6px)" : "none",
-            transition: "color 0.3s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-          }}
-        >
+        <div style={{ fontWeight: 700, fontSize: "0.92rem", color: isHovered ? WHITE : "rgba(255,255,255,0.85)", transform: isHovered ? "translateX(6px)" : "none", transition: "color 0.3s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
           {fact.value}
         </div>
       </div>
@@ -81,26 +60,18 @@ const About: FC = () => {
   ];
 
   return (
-    <section id="about" ref={ref} className="relative z-1 min-h-screen px-20 py-32">
+    <section id="about" ref={ref} className="section-pad relative z-1 min-h-screen py-24 md:py-32">
       <ScrollRevealBlock delay={0} style={{ marginBottom: "3.5rem" }}>
-        <FlickerHeading
-          text="About"
-          tag="h2"
-          style={{ fontWeight: 900, fontSize: "clamp(2rem, 5vw, 4rem)", letterSpacing: "-0.03em", color: "#ffffff", margin: 0, lineHeight: 1 }}
-        />
+        <FlickerHeading text="About" tag="h2" style={{ fontWeight: 900, fontSize: "clamp(2rem, 5vw, 4rem)", letterSpacing: "-0.03em", color: "#ffffff", margin: 0, lineHeight: 1 }} />
       </ScrollRevealBlock>
 
-      <ScrollRevealBlock delay={0.08} style={{ marginBottom: "5rem" }}>
+      <ScrollRevealBlock delay={0.08} style={{ marginBottom: "4rem" }}>
         <blockquote className="m-0 p-0">
-          <FlickerHeading
-            text="I build things that didn't exist before I wrote them."
-            tag="span"
-            style={{ fontWeight: 900, fontSize: "clamp(1.6rem, 4vw, 3.2rem)", lineHeight: 1.12, letterSpacing: "-0.03em", color: "#ffffff" }}
-          />
+          <FlickerHeading text="I build things that didn't exist before I wrote them." tag="span" style={{ fontWeight: 900, fontSize: "clamp(1.4rem, 4vw, 3.2rem)", lineHeight: 1.12, letterSpacing: "-0.03em", color: "#ffffff" }} />
         </blockquote>
       </ScrollRevealBlock>
 
-      <div className="grid gap-20" style={{ gridTemplateColumns: "1fr 1fr" }}>
+      <div className="about-grid">
         <div className="flex flex-col gap-[1.4rem]">
           {bioParagraphs.map((segments, i) => (
             <AnimatedRichText key={i} segments={segments} delay={0.2 + i * 0.1} visible={sectionVisible} />
