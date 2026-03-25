@@ -55,7 +55,7 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
   if (!project) return null;
 
   const isStudySite   = project.id === "01" || project.tags?.includes("study");
-  const isEsportsWeb = project.id === "05" || project.tags?.includes("esports");
+  const isEsportsWeb = project.id === "02" || project.tags?.includes("esports");
   const isEsportsDash = project.id === "05" || project.tags?.includes("esports-dash");
   const showTestLogin = isStudySite || isEsportsDash;
   const testCreds     = isStudySite
