@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC, useState, useEffect } from "react";
 import { useMagneticTilt } from "../hooks/useMagneticTilt";
 import { useReveal } from "../hooks/useReveal";
 import { projects } from "../data";
@@ -6,6 +6,17 @@ import type { Project } from "../types";
 import ScrollRevealBlock from "./shared/ScrollRevealBlock";
 import FlickerHeading from "./shared/FlickerHeading";
 import ProjectModal from "./ProjectModal";
+
+// collapse wide/tall spans on small screens
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return isMobile;
+};
 
 const ProjectCard: FC<{
   project: Project;
@@ -15,11 +26,19 @@ const ProjectCard: FC<{
 }> = ({ project, cardIndex, sectionVisible, onClick }) => {
   const { ref, tilt, onMouseMove, onMouseEnter, onMouseLeave } = useMagneticTilt(10);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const isMobile = useIsMobile();
+
   const isWide = project.size === "wide";
   const isTall = project.size === "tall";
 
-  const cardTransform  = `perspective(900px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale(${tilt.isHovered ? 1.025 : 1})`;
-  const imageTransform = `translate(${(tilt.lightX - 50) * -0.08}%, ${(tilt.lightY - 50) * -0.08}%) scale(${tilt.isHovered ? 1.06 : 1.0})`;
+  // tilt transform
+  const cardTransform = isMobile
+    ? `scale(${tilt.isHovered ? 1.01 : 1})`
+    : `perspective(900px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale(${tilt.isHovered ? 1.025 : 1})`;
+
+  const imageTransform = isMobile
+    ? `scale(${tilt.isHovered ? 1.04 : 1})`
+    : `translate(${(tilt.lightX - 50) * -0.08}%, ${(tilt.lightY - 50) * -0.08}%) scale(${tilt.isHovered ? 1.06 : 1.0})`;
 
   return (
     <div
@@ -30,8 +49,9 @@ const ProjectCard: FC<{
       onClick={onClick}
       className="relative rounded-2xl overflow-hidden will-change-transform"
       style={{
-        gridColumn: isWide ? "span 2" : "span 1",
-        gridRow:    isTall ? "span 2" : "span 1",
+        // force single-column on mobile regardless of project.size
+        gridColumn: isWide && !isMobile ? "span 2" : "span 1",
+        gridRow:    isTall && !isMobile ? "span 2" : "span 1",
         background: "#0d0d0d",
         border: tilt.isHovered ? "1px solid rgba(255,255,255,0.13)" : "1px solid rgba(255,255,255,0.07)",
         boxShadow: tilt.isHovered ? `0 24px 60px rgba(0,0,0,0.7), 0 0 40px -10px ${project.accent}33` : "0 4px 24px rgba(0,0,0,0.4)",
@@ -46,8 +66,10 @@ const ProjectCard: FC<{
         } : {}),
       }}
     >
+      {/* glare overlay */}
       <div className="absolute inset-0 z-3 pointer-events-none rounded-2xl" style={{ background: `radial-gradient(circle at ${tilt.lightX}% ${tilt.lightY}%, rgba(255,255,255,0.07) 0%, transparent 65%)`, opacity: tilt.isHovered ? 1 : 0, transition: "opacity 0.35s ease" }} />
 
+      {/* background image + gradient vignette */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={project.img}
@@ -59,13 +81,18 @@ const ProjectCard: FC<{
         <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, transparent 15%, rgba(0,0,0,0.85) 100%)" }} />
       </div>
 
+      {/* accent top bar */}
       <div className="absolute top-0 left-0 h-0.5" style={{ background: project.accent, width: tilt.isHovered ? "100%" : "0%", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)", opacity: 0.9 }} />
 
       <div style={{ position: "absolute", bottom: "0.85rem", right: "0.85rem", zIndex: 4, fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.1em", textTransform: "uppercase", color: project.accent, opacity: tilt.isHovered ? 0.8 : 0, transition: "opacity 0.3s ease", pointerEvents: "none" }}>
         View Case Study →
       </div>
 
-      <div className="relative z-2 h-full flex flex-col justify-between p-5">
+      {/* card content */}
+      <div
+        className="relative z-2 h-full flex flex-col justify-between"
+        style={{ padding: isMobile ? "0.85rem" : "1.25rem" }}
+      >
         <div className="flex justify-between items-start">
           <span className="uppercase" style={{ fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.12em", color: project.accent, opacity: 0.85 }}>{project.year}</span>
           <a href={project.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
@@ -76,19 +103,37 @@ const ProjectCard: FC<{
 
         <div>
           <div className="mb-[0.4rem]" style={{ fontWeight: 400, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.2)" }}>{project.id}</div>
-          <h3 className="text-white m-0 mb-[0.65rem] leading-[1.08]" style={{ fontWeight: 900, letterSpacing: "-0.03em", fontSize: isWide ? "clamp(1.2rem, 2.5vw, 2rem)" : "clamp(1rem, 2vw, 1.5rem)", transform: tilt.isHovered ? "translateX(5px)" : "none", transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
+          <h3
+            className="text-white m-0 mb-[0.65rem] leading-[1.08]"
+            style={{
+              fontWeight: 900,
+              letterSpacing: "-0.03em",
+              // smaller title clamp on mobile
+              fontSize: isMobile
+                ? "clamp(0.95rem, 5vw, 1.25rem)"
+                : isWide
+                  ? "clamp(1.2rem, 2.5vw, 2rem)"
+                  : "clamp(1rem, 2vw, 1.5rem)",
+              transform: tilt.isHovered ? "translateX(5px)" : "none",
+              transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
+            }}
+          >
             {project.title}
           </h3>
           <p className="m-0 mb-[1.1rem] max-w-[42ch]" style={{ fontWeight: 400, fontSize: "0.78rem", lineHeight: 1.75, color: "rgba(255,255,255,0.5)", opacity: (tilt.isHovered || isTall) ? 1 : 0, transform: (tilt.isHovered || isTall) ? "translateY(0)" : "translateY(8px)", transition: "opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s" }}>
             {project.desc}
           </p>
-          <div className="flex gap-[0.4rem] flex-wrap">
-            {project.stack.map((tag, tagIndex) => (
-              <span key={tag} className="rounded-full py-1 px-[0.65rem]" style={{ fontWeight: 600, fontSize: "0.58rem", letterSpacing: "0.06em", background: tilt.isHovered ? `${project.accent}1a` : "rgba(255,255,255,0.06)", border: tilt.isHovered ? `1px solid ${project.accent}40` : "1px solid rgba(255,255,255,0.09)", color: tilt.isHovered ? project.accent : "rgba(255,255,255,0.5)", transition: `all 0.3s ease ${tagIndex * 45}ms`, transform: tilt.isHovered ? "translateY(0)" : "translateY(2px)" }}>
-                {tag}
-              </span>
-            ))}
-          </div>
+
+          {/* stack tags */}
+          {(!isMobile || tilt.isHovered) && (
+            <div className="flex gap-[0.4rem] flex-wrap">
+              {project.stack.map((tag, tagIndex) => (
+                <span key={tag} className="rounded-full py-1 px-[0.65rem]" style={{ fontWeight: 600, fontSize: "0.58rem", letterSpacing: "0.06em", background: tilt.isHovered ? `${project.accent}1a` : "rgba(255,255,255,0.06)", border: tilt.isHovered ? `1px solid ${project.accent}40` : "1px solid rgba(255,255,255,0.09)", color: tilt.isHovered ? project.accent : "rgba(255,255,255,0.5)", transition: `all 0.3s ease ${tagIndex * 45}ms`, transform: tilt.isHovered ? "translateY(0)" : "translateY(2px)" }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -102,6 +147,7 @@ const Work: FC = () => {
   return (
     <>
       <section id="work" ref={ref} className="section-pad relative z-1 min-h-screen py-24 md:py-32">
+        {/* section header */}
         <ScrollRevealBlock delay={0}>
           <div className="flex justify-between items-end mb-10 md:mb-12">
             <FlickerHeading text="Work" tag="h2" style={{ fontWeight: 900, fontSize: "clamp(2rem, 5vw, 4rem)", letterSpacing: "-0.03em", color: "#ffffff", margin: 0, lineHeight: 1 }} />
@@ -109,6 +155,7 @@ const Work: FC = () => {
           </div>
         </ScrollRevealBlock>
 
+        {/* project grid */}
         <div className="work-grid">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} cardIndex={i} sectionVisible={sectionVisible} onClick={() => setActiveProject(project)} />
@@ -116,6 +163,7 @@ const Work: FC = () => {
         </div>
       </section>
 
+      {/* modal */}
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </>
   );
