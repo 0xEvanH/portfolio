@@ -65,7 +65,7 @@ export const projects: Project[] = [
     link: "https://neural.evhsync.com",
     github: "https://github.com/0xEvanH/neural-network",
     img: IMGS["04"],
-    accent: "#b0e8c4",
+    accent: "#c9a3a3",
     size: "square",
   },
   {
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     caseStudy: "An internal operations tool for eSports orgs to manage rosters, track individual player performance metrics, log VOD reviews, and schedule scrimmages, all in one place. Role-based access lets coaches, analysts, and players each see a tailored view.",
     link: "https://nexus.evhsync.com",
     img: IMGS["05"],
-    accent: "#e8b0b0",
+    accent: "#ba0000",
     size: "square",
     tags: ["esports-dash"],
   },
