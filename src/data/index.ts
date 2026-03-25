@@ -1,11 +1,16 @@
 import type { Project, Skill } from "../types";
+import tytimg from "/tyt.png";
+import neuralimg from "/neural.png";
+import studyimg from "/studyvault.png";
+import threeimg from "/three.png";
+import nexusimg from "/nexus.png";
 
 const IMGS = {
-  "01": "https://picsum.photos/seed/studytools/1200/600",
-  "02": "https://picsum.photos/seed/esportsweb/1200/600",
-  "03": "https://picsum.photos/seed/threedvis/1200/600",
-  "04": "https://picsum.photos/seed/neuralnet/1200/600",
-  "05": "https://picsum.photos/seed/esportsdash/1200/600",
+  "01": studyimg,
+  "02": tytimg,
+  "03": threeimg,
+  "04": neuralimg,
+  "05": nexusimg,
 };
 
 export const projects: Project[] = [
@@ -71,7 +76,6 @@ export const projects: Project[] = [
     desc: "An app built to allow organisations within eSports to track team progress and organise everything in one place.",
     caseStudy: "An internal operations tool for eSports orgs to manage rosters, track individual player performance metrics, log VOD reviews, and schedule scrimmages, all in one place. Role-based access lets coaches, analysts, and players each see a tailored view.",
     link: "https://nexus.evhsync.com",
-    github: "https://github.com/0xEvanH/nexus-tracker",
     img: IMGS["05"],
     accent: "#e8b0b0",
     size: "square",
