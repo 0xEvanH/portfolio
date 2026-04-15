@@ -15,6 +15,22 @@ body {
   width: 0;
 }
 
+/* already on your desktop components */
+.progress-bar-hide-mobile,
+.sidenav-hide-mobile,
+.section-counter-hide-mobile { display: block; }
+
+/* new mobile nav — hidden on desktop, shown on mobile */
+.mobile-nav-show-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .progress-bar-hide-mobile,
+  .sidenav-hide-mobile,
+  .section-counter-hide-mobile { display: none; }
+
+  .mobile-nav-show-mobile { display: flex; }
+}
+
 @keyframes introLift {
   from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -42,6 +58,16 @@ body {
   .sidenav-hide-mobile { display: none !important; }
   .section-counter-hide-mobile { display: none !important; }
   .progress-bar-hide-mobile { display: none !important; }
+
+  /* allow native scroll on mobile */
+  body {
+    overflow-y: auto;
+  }
+
+  /* push page content above the fixed mobile nav bar (~64px tall) */
+  #contact {
+    padding-bottom: 5rem;
+  }
 }
 
 /* Work grid */

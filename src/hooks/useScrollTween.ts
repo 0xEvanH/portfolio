@@ -49,6 +49,8 @@ export function useScrollTween(
   }, [setActive]);
 
   useEffect(() => {
+    if (window.innerWidth <= 768) return;
+
     let accumulatedDelta = 0;
     let resetTimer: ReturnType<typeof setTimeout>;
 
@@ -70,6 +72,8 @@ export function useScrollTween(
   }, [scrollToSection]);
 
   useEffect(() => {
+    if (window.innerWidth <= 768) return;
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (isScrolling.current) return;
       const currentIndex = getActiveSectionIndex();
@@ -82,6 +86,8 @@ export function useScrollTween(
   }, [scrollToSection]);
 
   useEffect(() => {
+    if (window.innerWidth <= 768) return;
+
     let touchStartY = 0;
     const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const onTouchEnd   = (e: TouchEvent) => {

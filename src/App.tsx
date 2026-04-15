@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { SECTION_IDS } from "./constants";
 import { useScrollTween } from "./hooks/useScrollTween";
 import { Background, Intro } from "./components/Background";
-import { ProgressBar, SideNav, SectionCounter } from "./components/Nav";
+import { ProgressBar, SideNav, SectionCounter, MobileNav } from "./components/Nav";
 import Hero    from "./components/Hero";
 import Work    from "./components/Work";
 import Skills  from "./components/Skills";
@@ -40,6 +40,7 @@ export default function App() {
       <ProgressBar    activeSectionIndex={activeSectionIndex} />
       <SideNav        activeSectionIndex={activeSectionIndex} scrollToSection={scrollToSection} />
       <SectionCounter activeSectionIndex={activeSectionIndex} />
+      <MobileNav      activeSectionIndex={activeSectionIndex} scrollToSection={scrollToSection} />
       <Hero    ready={pageReady} />
       <Work />
       <Skills />

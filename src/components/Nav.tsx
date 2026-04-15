@@ -98,3 +98,67 @@ export const SectionCounter: FC<{ activeSectionIndex: number }> = ({ activeSecti
     <span>{String(SECTION_IDS.length).padStart(2, "0")}</span>
   </div>
 );
+
+export const MobileNav: FC<{ activeSectionIndex: number; scrollToSection: (i: number) => void }> = ({
+  activeSectionIndex,
+  scrollToSection,
+}) => {
+  const navLinks = [
+    { id: "home"       as SectionId, label: "Home" },
+    { id: "work"       as SectionId, label: "Work" },
+    { id: "skills"     as SectionId, label: "Skills" },
+    { id: "about"      as SectionId, label: "About" },
+    { id: "experience" as SectionId, label: "Exp" },
+    { id: "contact"    as SectionId, label: "Contact" },
+  ];
+
+  return (
+    <nav
+      className="mobile-nav-show-mobile fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-2"
+      style={{
+        background: "rgba(10,10,10,0.85)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
+      {navLinks.map(({ id, label }, i) => {
+        const isActive = activeSectionIndex === i;
+        return (
+          <button
+            key={id}
+            onClick={() => scrollToSection(i)}
+            className="flex flex-col items-center justify-center gap-1 bg-transparent border-none cursor-pointer p-2 flex-1"
+            style={{ minWidth: 0 }}
+          >
+            <div
+              className="flex items-center justify-center rounded-lg"
+              style={{
+                width: 32,
+                height: 32,
+                background: isActive ? "rgba(255,255,255,0.13)" : "transparent",
+                border: isActive ? "1px solid rgba(255,255,255,0.2)" : "1px solid transparent",
+                color: isActive ? WHITE : "rgba(255,255,255,0.38)",
+                transition: "all 0.22s ease",
+              }}
+            >
+              {sectionIcons[id]}
+            </div>
+            <span
+              style={{
+                fontSize: "0.55rem",
+                letterSpacing: "0.06em",
+                fontWeight: isActive ? 700 : 400,
+                color: isActive ? WHITE : "rgba(255,255,255,0.38)",
+                transition: "color 0.22s ease",
+                lineHeight: 1,
+              }}
+            >
+              {label}
+            </span>
+          </button>
+        );
+      })}
+    </nav>
+  );
+};

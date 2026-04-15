@@ -11,6 +11,7 @@ const IMGS = {
   "03": threeimg,
   "04": neuralimg,
   "05": nexusimg,
+  "06": ""
 };
 
 export const projects: Project[] = [
@@ -80,6 +81,18 @@ export const projects: Project[] = [
     accent: "#ba0000",
     size: "square",
     tags: ["esports-dash"],
+  },
+  {
+    id: "06",
+    title: "StrovaCo",
+    stack: ["React", "Python", "TailwindCSS", "Graphic Design"],
+    year: "2026",
+    desc: "A B2B business I run creating websites, dashboards and branding.",
+    caseStudy: "Currently being worked on.",
+    link: "https://strovaco.com",
+    img: IMGS["06"],
+    accent: "#c9a3a3",
+    size: "square",
   },
 ];
 

@@ -67,7 +67,7 @@ const Hero: FC<{ ready: boolean }> = ({ ready }) => {
   return (
     <section ref={sectionRef} id="home" className="section-pad relative z-1 min-h-screen flex flex-col justify-end pb-16 md:pb-20">
       <div className="uppercase mb-8" style={{ fontWeight: 400, fontSize: "0.7rem", letterSpacing: "0.14em", color: WHITE_DIM, ...entranceStyle(0.05) }}>
-        College Application Portfolio - 2026
+        E.H. Portfolio - 2026
       </div>
 
       <div style={{ ...entranceStyle(0.1), transform: `${ready ? "translateY(0)" : "translateY(28px)"} translate(${parallaxX * 0.4}px, ${parallaxY * 0.4}px)`, transition: "opacity 0.85s ease 0.1s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.1s" }}>
