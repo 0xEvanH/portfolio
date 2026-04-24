@@ -50,7 +50,7 @@ const Hero: FC<{ ready: boolean }> = ({ ready }) => {
   useEffect(() => { if (ready) setTimeout(() => setCountingStarted(true), 600); }, [ready]);
 
   const nameText = useScramble("Evan Howard", ready, 38);
-  const fieldText = useScramble("Undergrad.", ready, 42);
+  const fieldText = useScramble("Student.", ready, 42);
   const projectCount = useCountUp(projects.length, countingStarted, 900);
   const skillCount = useCountUp(skills.length, countingStarted, 1100);
   const yearCount = useCountUp(2, countingStarted, 800);
