@@ -39,7 +39,7 @@ export const SideNav: FC<{ activeSectionIndex: number; scrollToSection: (i: numb
   ];
 
   return (
-    <nav className="sidenav-hide-mobile fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
+    <nav className="sidenav-hide-mobile fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col items-end gap-2">
       {navLinks.map(({ id, label }, i) => {
         const isActive  = activeSectionIndex === i;
         const isHovered = hoveredSection === id;
@@ -51,11 +51,12 @@ export const SideNav: FC<{ activeSectionIndex: number; scrollToSection: (i: numb
             onMouseEnter={() => setHoveredSection(id)}
             onMouseLeave={() => setHoveredSection(null)}
             title={label}
-            className="flex items-center justify-end gap-[0.6rem] bg-transparent border-none cursor-pointer p-0"
+            className="relative flex items-center justify-center bg-transparent border-none cursor-pointer p-0"
           >
             <span
-              className="whitespace-nowrap pointer-events-none"
+              className="absolute whitespace-nowrap pointer-events-none"
               style={{
+                right: "calc(100% + 0.6rem)",
                 fontWeight: isActive ? 700 : 400,
                 fontSize: "0.65rem",
                 letterSpacing: "0.06em",

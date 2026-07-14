@@ -71,13 +71,15 @@ const ProjectCard: FC<{
 
       {/* image */}
       <div className="absolute inset-0 overflow-hidden">
-        <img
-          src={project.img}
-          alt={project.title}
-          onLoad={() => setImageLoaded(true)}
-          className="w-full h-full object-cover"
-          style={{ opacity: imageLoaded ? (tilt.isHovered ? 0.42 : 0.28) : 0, transform: imageTransform, transition: "opacity 0.5s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)", filter: "grayscale(20%)" }}
-        />
+        {project.img && (
+          <img
+            src={project.img}
+            alt={project.title}
+            onLoad={() => setImageLoaded(true)}
+            className="w-full h-full object-cover"
+            style={{ opacity: imageLoaded ? (tilt.isHovered ? 0.42 : 0.28) : 0, transform: imageTransform, transition: "opacity 0.5s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)", filter: "grayscale(20%)" }}
+          />
+        )}
         <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, transparent 15%, rgba(0,0,0,0.85) 100%)" }} />
       </div>
 

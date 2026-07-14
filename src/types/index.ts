@@ -3,13 +3,16 @@ export type SectionId = "home" | "work" | "skills" | "about" | "experience" | "c
 export interface Project {
   id: string;
   title: string;
-  stack: string[];
-  year: string;
   desc: string;
-  link: string;
+  caseStudy?: string;
+  year: string;
   img: string;
   accent: string;
+  link: string;
+  github?: string;
+  stack: string[];
   size: "wide" | "tall" | "square";
+  tags?: string[];
 }
 
 export interface Skill {
@@ -33,21 +36,3 @@ export interface RichSegment {
   bold?: boolean;
   italic?: boolean;
 }
-
-export interface Project {
-  id: string;
-  title: string;
-  desc: string;
-
-  caseStudy?: string;
-  year: string;
-  img: string;
-  accent: string;
-  link: string;
-
-  github?: string;
-  stack: string[];
-
-  tags?: string[];
-}
- 

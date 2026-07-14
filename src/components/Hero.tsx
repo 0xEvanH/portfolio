@@ -23,29 +23,37 @@ const StatBlock: FC<{ value: number; label: string }> = ({ value, label }) => {
 const Hero: FC<{ ready: boolean }> = ({ ready }) => {
   const [countingStarted, setCountingStarted] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const [rawCursor, setRawCursor] = useState({ x: 0.5, y: 0.5 });
+  const targetCursor = useRef({ x: 0.5, y: 0.5 });
   const smoothCursor = useRef({ x: 0.5, y: 0.5 });
+  const [cursor, setCursor] = useState({ x: 0.5, y: 0.5 });
   const cursorRafId = useRef<number>(0);
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-      setRawCursor({ x: (e.clientX - rect.left) / rect.width, y: (e.clientY - rect.top) / rect.height });
+      targetCursor.current = { x: (e.clientX - rect.left) / rect.width, y: (e.clientY - rect.top) / rect.height };
     };
     window.addEventListener("mousemove", onMouseMove);
     return () => window.removeEventListener("mousemove", onMouseMove);
   }, []);
 
   useEffect(() => {
+    let lastX = 0.5, lastY = 0.5;
     const smoothStep = () => {
-      smoothCursor.current.x = lerp(smoothCursor.current.x, rawCursor.x, 0.06);
-      smoothCursor.current.y = lerp(smoothCursor.current.y, rawCursor.y, 0.06);
+      const s = smoothCursor.current, t = targetCursor.current;
+      s.x = lerp(s.x, t.x, 0.06);
+      s.y = lerp(s.y, t.y, 0.06);
+      // only re-render when the eased value moved enough to matter
+      if (Math.abs(s.x - lastX) > 0.0004 || Math.abs(s.y - lastY) > 0.0004) {
+        lastX = s.x; lastY = s.y;
+        setCursor({ x: s.x, y: s.y });
+      }
       cursorRafId.current = requestAnimationFrame(smoothStep);
     };
     cursorRafId.current = requestAnimationFrame(smoothStep);
     return () => cancelAnimationFrame(cursorRafId.current);
-  }, [rawCursor]);
+  }, []);
 
   useEffect(() => { if (ready) setTimeout(() => setCountingStarted(true), 600); }, [ready]);
 
@@ -61,8 +69,8 @@ const Hero: FC<{ ready: boolean }> = ({ ready }) => {
     transition: `opacity 0.85s ease ${delay}s, transform 0.85s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
   });
 
-  const parallaxX = (smoothCursor.current.x - 0.5) * 18;
-  const parallaxY = (smoothCursor.current.y - 0.5) * 10;
+  const parallaxX = (cursor.x - 0.5) * 18;
+  const parallaxY = (cursor.y - 0.5) * 10;
 
   return (
     <section ref={sectionRef} id="home" className="section-pad relative z-1 min-h-screen flex flex-col justify-end pb-16 md:pb-20">

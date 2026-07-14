@@ -42,11 +42,11 @@ body {
 }
 
 @keyframes grainShift {
-  0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-2%, 1%); }
-  50%  { transform: translate(1%, -2%); }
-  75%  { transform: translate(2%, 2%); }
-  100% { transform: translate(0, 0); }
+  0%   { background-position: 0 0; }
+  25%  { background-position: -8px 4px; }
+  50%  { background-position: 4px -8px; }
+  75%  { background-position: 8px 8px; }
+  100% { background-position: 0 0; }
 }
 
 .section-pad {

@@ -1,7 +1,7 @@
 import { type CSSProperties, type FC, useEffect, useState } from "react";
 
 export const Background: FC = () => (
-  <div className="fixed inset-0 z-0 bg-black pointer-events-none">
+  <div className="fixed inset-0 z-0 bg-black pointer-events-none overflow-hidden">
     <div
       className="absolute rounded-full"
       style={{

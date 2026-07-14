@@ -24,20 +24,24 @@ export function useMagneticTilt(intensity = 12) {
   const rafId       = useRef<number>(0);
   const mouseIsOver = useRef(false);
 
-  const animateTilt = useCallback(() => {
-    const speed = mouseIsOver.current ? 0.12 : 0.08;
-    currentTilt.current.rotateX = lerp(currentTilt.current.rotateX, targetTilt.current.rotateX, speed);
-    currentTilt.current.rotateY = lerp(currentTilt.current.rotateY, targetTilt.current.rotateY, speed);
-    currentTilt.current.lightX  = lerp(currentTilt.current.lightX,  targetTilt.current.lightX,  speed);
-    currentTilt.current.lightY  = lerp(currentTilt.current.lightY,  targetTilt.current.lightY,  speed);
+  const startLoop = useCallback(() => {
+    cancelAnimationFrame(rafId.current);
+    const step = () => {
+      const speed = mouseIsOver.current ? 0.12 : 0.08;
+      currentTilt.current.rotateX = lerp(currentTilt.current.rotateX, targetTilt.current.rotateX, speed);
+      currentTilt.current.rotateY = lerp(currentTilt.current.rotateY, targetTilt.current.rotateY, speed);
+      currentTilt.current.lightX  = lerp(currentTilt.current.lightX,  targetTilt.current.lightX,  speed);
+      currentTilt.current.lightY  = lerp(currentTilt.current.lightY,  targetTilt.current.lightY,  speed);
 
-    setTilt({ ...currentTilt.current, isHovered: mouseIsOver.current });
+      setTilt({ ...currentTilt.current, isHovered: mouseIsOver.current });
 
-    const stillMoving =
-      Math.abs(currentTilt.current.rotateX - targetTilt.current.rotateX) > 0.01 ||
-      Math.abs(currentTilt.current.rotateY - targetTilt.current.rotateY) > 0.01;
+      const stillMoving =
+        Math.abs(currentTilt.current.rotateX - targetTilt.current.rotateX) > 0.01 ||
+        Math.abs(currentTilt.current.rotateY - targetTilt.current.rotateY) > 0.01;
 
-    if (stillMoving || mouseIsOver.current) rafId.current = requestAnimationFrame(animateTilt);
+      if (stillMoving || mouseIsOver.current) rafId.current = requestAnimationFrame(step);
+    };
+    rafId.current = requestAnimationFrame(step);
   }, []);
 
   const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -53,16 +57,14 @@ export function useMagneticTilt(intensity = 12) {
 
   const onMouseEnter = useCallback(() => {
     mouseIsOver.current = true;
-    cancelAnimationFrame(rafId.current);
-    rafId.current = requestAnimationFrame(animateTilt);
-  }, [animateTilt]);
+    startLoop();
+  }, [startLoop]);
 
   const onMouseLeave = useCallback(() => {
     mouseIsOver.current = false;
     targetTilt.current = { rotateX: 0, rotateY: 0, lightX: 50, lightY: 50 };
-    cancelAnimationFrame(rafId.current);
-    rafId.current = requestAnimationFrame(animateTilt);
-  }, [animateTilt]);
+    startLoop();
+  }, [startLoop]);
 
   useEffect(() => () => cancelAnimationFrame(rafId.current), []);
 

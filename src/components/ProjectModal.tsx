@@ -32,7 +32,7 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
   const [sitesOpen, setSitesOpen] = useState(false);
 
   useEffect(() => {
-    if (!project) { setSitesOpen(false); return; }
+    if (!project) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     const scrollY = window.scrollY;
@@ -49,6 +49,7 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
       document.body.style.right     = "";
       document.body.style.overflowY = "";
       window.scrollTo(0, scrollY);
+      setSitesOpen(false);
     };
   }, [project, onClose]);
 
@@ -174,7 +175,7 @@ const ProjectModal: FC<ProjectModalProps> = ({ project, onClose }) => {
 
           {/* banner image */}
           <div className="pm-banner">
-            <img src={project.img} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55, filter: "grayscale(15%)" }} />
+            {project.img && <img src={project.img} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55, filter: "grayscale(15%)" }} />}
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, #0d0d0d 0%, transparent 40%, transparent 60%, #0d0d0d 100%)` }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, #0d0d0d 100%)" }} />
 
